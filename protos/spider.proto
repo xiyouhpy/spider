@@ -1,0 +1,39 @@
+// 定义 protobuf 版本
+syntax = "proto3";
+
+// 定义包名
+package spider;
+
+option go_package = "./";
+
+// 定义服务对外接口
+service Spider {
+	rpc GetList (GetListRequest) returns (GetListReply) {}
+}
+
+// 获取列表
+message GetListRequest {
+    string  servname = 1;           	// <必填> 业务名
+    string  classify = 2;               // <非必填> 分类信息
+    string  date = 3;                   // <非必填> 默认为 0，表示不依赖日期过滤
+    int64   offset = 4;                 // <非必填> 查询开始位置，默认 0 开始
+    int64   size = 5;                   // <非必填> 返回条数，默认 10 条
+}
+message GetListReply {
+    int64   errno = 1;                  // 错误号
+    string  msg = 2;                    // 错误描述
+    ListInfo list_info = 3;         	// 数据列表信息
+}
+message ListInfo {
+    int64   count = 1;                  // 数据总条数
+    repeated DataInfo list = 2;         // 数据详情信息
+}
+message DataInfo {
+    string  servname = 1;           	// 业务名
+    string  classify = 2;               // 分类信息
+	int64   create_time = 3;            // 数据创建时间
+	string  update_time = 4;            // 数据更新时间
+	string  index_name = 5;             // 索引文件名
+	string  date_desc = 6;              // 数据描述
+	string  date_source = 7;            // 数据源信息详情，json结构
+}
