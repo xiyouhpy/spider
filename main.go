@@ -1,7 +1,7 @@
 package main
 
 import (
-	"spider/util"
+	"github.com/xiyouhpy/spider/util"
 
 	"log"
 )
