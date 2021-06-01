@@ -18,6 +18,7 @@ const (
 	ErrEncodeError      = 4 // 编码错误
 	ErrCallRedisError   = 5 // 调用 redis 失败
 	ErrServiceError     = 6 // 服务错误
+	ErrGetConfError     = 7 // 获取配置失败
 
 	// 业务错误号，错误号范围 [10000, 999999)；前两位表示属于哪个业务，后四位表示该业务的细分错误号
 	// todo...
@@ -33,6 +34,7 @@ var errMap = map[ErrCode]string{
 	4: "encode error",
 	5: "call redis error",
 	6: "service error",
+	7: "get conf error",
 }
 
 // NewError 自定义错误构造方法
