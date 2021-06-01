@@ -2,6 +2,8 @@ module spider
 
 go 1.14
 
+replace github.com/xiyouhpy/spider => ./
+
 require (
 	github.com/gin-gonic/gin v1.7.2
 	google.golang.org/protobuf v1.26.0
