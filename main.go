@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/xiyouhpy/spider/util"
-
 	"log"
+
+	"github.com/xiyouhpy/spider/router"
+	"github.com/xiyouhpy/spider/util"
 )
 
 func main() {
@@ -12,5 +13,7 @@ func main() {
 	log.Printf("system info:%+v", util.SystemConfInfo)
 	log.Printf("mysql info:%+v", util.MysqlConfInfo)
 	log.Printf("redis info:%+v", util.RedisConfInfo)
+
+	router.Server()
 	return
 }

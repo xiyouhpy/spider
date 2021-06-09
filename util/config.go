@@ -57,7 +57,7 @@ func InitConf() {
 }
 
 // getConf 获取配置信息
-func getConf(strFileName string, confInfo *map[string]interface{}) base.ErrCode {
+func getConf(strFileName string, confInfo *map[string]interface{}) error {
 	_, err := os.Stat(strFileName)
 	if os.IsNotExist(err) {
 		log.Fatal("getSpiderConf err, filename:", strFileName, " not exist")
