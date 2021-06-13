@@ -2,8 +2,8 @@ redis_spider: # mysql 数据库名
     username: "root"                  # redis 连接用户名
     password: "root"                  # redis 连接密码
     ip: "127.0.0.1"                   # redis 连接IP
-    port: 6379                        # redis 连接Port
+    port: "6379"                      # redis 连接Port
     conn_timeout: 20                  # redis 连接超时，单位 ms, 默认值500ms
     write_timeout: 50                 # redis 写超时，单位 ms, 默认值500ms
     read_timeout: 120                 # redis 读超时，单位 ms, 默认值500ms
-    Retry: 3                          # redis 累计重试次数
+    retry: 3                          # redis 累计重试次数

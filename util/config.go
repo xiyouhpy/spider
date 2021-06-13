@@ -11,8 +11,6 @@ import (
 )
 
 const (
-	// 系统相关配置文件
-	LogConf = "./config/log.yaml"
 	// mysql 相关配置文件
 	MysqlConf = "./config/mysql.yaml"
 	// redis 相关配置文件
@@ -22,42 +20,69 @@ const (
 	SpiderConf = "./config/spider.yaml"
 )
 
-// 抓取配置信息
-var SpiderConfInfo = map[string]interface{}{}
-
-// 系统配置信息
-var SystemConfInfo = map[string]interface{}{}
-
 // mysql配置信息
-var MysqlConfInfo = map[string]interface{}{}
+type mysqlInfo struct {
+	Username 		string 	`yaml:"username"`
+	Password 		string 	`yaml:"password"`
+	Ip				string 	`yaml:"ip"`
+	Port			string 	`yaml:"port"`
+	ConnTimeout		int 	`yaml:"conn_timeout"`
+	WriteTimeout	int 	`yaml:"write_timeout"`
+	ReadTimeout		int 	`yaml:"read_timeout"`
+	Retry			int 	`yaml:"retry"`
+}
+var MysqlConfInfo = map[string]mysqlInfo{}
 
 // redis配置信息
-var RedisConfInfo = map[string]interface{}{}
+type redisInfo struct {
+	Username 		string 	`yaml:"username"`
+	Password 		string 	`yaml:"password"`
+	Ip				string 	`yaml:"ip"`
+	Port			string 	`yaml:"port"`
+	ConnTimeout		int 	`yaml:"conn_timeout"`
+	WriteTimeout	int 	`yaml:"write_timeout"`
+	ReadTimeout		int 	`yaml:"read_timeout"`
+	Retry			int 	`yaml:"retry"`
+}
+var RedisConfInfo = map[string]redisInfo{}
 
 func InitConf() {
-	// 初始化系统配置信息
-	if getConf(LogConf, &SystemConfInfo) != base.ErrSuccess {
-		return
-	}
-
-	// 初始化抓取配置信息
-	if getConf(SpiderConf, &SpiderConfInfo) != base.ErrSuccess {
-		return
-	}
-
 	// 初始化mysql配置信息
-	if getConf(MysqlConf, &MysqlConfInfo) != base.ErrSuccess {
+	if getMysqlConf(MysqlConf, &MysqlConfInfo) != base.ErrSuccess {
 		return
 	}
 
 	// 初始化redis配置信息
-	if getConf(RedisConf, &RedisConfInfo) != base.ErrSuccess {
+	if getRedisConf(RedisConf, &RedisConfInfo) != base.ErrSuccess {
 		return
 	}
 }
 
-// getConf 获取配置信息
-func getConf(strFileName string, confInfo *map[string]interface{}) error {
+// getMysqlConf 获取配置信息
+func getMysqlConf(strFileName string, confInfo *map[string]mysqlInfo) error {
+	_, err := os.Stat(strFileName)
+	if os.IsNotExist(err) {
+		log.Fatal("getSpiderConf err, filename:", strFileName, " not exist")
+		return base.ErrGetConfError
+	}
+
+	data, err := ioutil.ReadFile(strFileName)
+	if err != nil {
+		log.Fatal("getSpiderConf ioutil.ReadFile err, filename:", strFileName, " err:", err.Error())
+		return base.ErrGetConfError
+	}
+
+	err = yaml.Unmarshal(data, confInfo)
+	if err != nil {
+		log.Fatal("getSpiderConf yaml.Unmarshal err, filename:", strFileName, " err:", err.Error())
+		return base.ErrGetConfError
+	}
+
+	return base.ErrSuccess
+}
+
+// getRedisConf 获取配置信息
+func getRedisConf(strFileName string, confInfo *map[string]redisInfo) error {
 	_, err := os.Stat(strFileName)
 	if os.IsNotExist(err) {
 		log.Fatal("getSpiderConf err, filename:", strFileName, " not exist")

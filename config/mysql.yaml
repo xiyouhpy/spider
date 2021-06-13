@@ -1,9 +1,9 @@
 spider_info: # redis 数据库名
-  username: "root"                    # mysql 连接用户名
-  password: "root"                    # mysql 连接密码
-  ip: "127.0.0.1"                     # mysql 连接IP
-  port: 3346                          # mysql 连接Port
-  conn_timeout: 500                   # mysql 连接超时，单位 ms, 默认值500ms
-  write_timeout: 500                  # mysql 写超时，单位 ms, 默认值500ms
-  read_timeout: 500                   # mysql 读超时，单位 ms, 默认值500ms
-  Retry: 3                            # mysql 累计重试次数
+    username: "root"                  # mysql 连接用户名
+    password: "root"                  # mysql 连接密码
+    ip: "127.0.0.1"                   # mysql 连接IP
+    port: "3346"                      # mysql 连接Port
+    conn_timeout: 500                 # mysql 连接超时，单位 ms, 默认值500ms
+    write_timeout: 500                # mysql 写超时，单位 ms, 默认值500ms
+    read_timeout: 500                 # mysql 读超时，单位 ms, 默认值500ms
+    retry: 3                          # mysql 累计重试次数
