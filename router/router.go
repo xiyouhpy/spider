@@ -1,9 +1,8 @@
 package router
 
 import (
-	"github.com/xiyouhpy/spider/controller"
-
 	"github.com/gin-gonic/gin"
+	"github.com/xiyouhpy/spider/controller"
 )
 
 // Server ...

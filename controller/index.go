@@ -24,4 +24,5 @@ func JsonRet(c *gin.Context, err error, data interface{}) {
 		"data": data,
 	}
 	c.JSON(http.StatusOK, response)
+	return
 }

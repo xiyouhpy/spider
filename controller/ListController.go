@@ -8,11 +8,19 @@ import (
 
 // GetListHandler ...
 func GetList(c *gin.Context) {
-	message := c.Query("message")
+	serviceID := c.Query("message")
 
-	service.GetList(ctx, 120)
-	data := map[string]string{
-		"message": message,
+	req := map[string]interface{}{
+		"service_id": serviceID,
 	}
-	JsonRet(c, base.ErrSuccess, data)
+	res, err := service.GetList(ctx, req)
+	if err == nil {
+		JsonRet(c, base.ErrServiceError, nil)
+		return
+	}
+
+	ret := map[string]interface{}{
+		"service_id": res,
+	}
+	JsonRet(c, base.ErrSuccess, ret)
 }
