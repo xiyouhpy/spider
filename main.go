@@ -1,12 +1,11 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
+	"context"
+
 	"github.com/xiyouhpy/spider/base"
 	"github.com/xiyouhpy/spider/router"
 	"github.com/xiyouhpy/spider/util"
-	"log"
-	"time"
 )
 
 func init() {
@@ -17,14 +16,9 @@ func init() {
 	base.InitLog()
 }
 
-func main() {
-	log.Printf("mysql info:%+v", util.MysqlConfInfo)
-	log.Printf("redis info:%+v", util.RedisConfInfo)
+var ctx = context.Background()
 
-	for {
-		logrus.Infof("test %s")
-		time.Sleep(2 * time.Second)
-	}
+func main() {
 	router.Server()
 	return
 }

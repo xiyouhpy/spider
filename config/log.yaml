@@ -1,3 +1,0 @@
-log_storage_time: 72          # 日志保留时长（小时）
-log_level: "notice"           # 日志默认等级
-log_format: "%s %s %d %s"     # 日志基础格式（年月日时分秒，文件名，文件行数，描述信息），业务打印只关心描述信息

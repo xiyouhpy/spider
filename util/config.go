@@ -22,28 +22,30 @@ const (
 
 // mysql配置信息
 type mysqlInfo struct {
-	Username 		string 	`yaml:"username"`
-	Password 		string 	`yaml:"password"`
-	Ip				string 	`yaml:"ip"`
-	Port			string 	`yaml:"port"`
-	ConnTimeout		int 	`yaml:"conn_timeout"`
-	WriteTimeout	int 	`yaml:"write_timeout"`
-	ReadTimeout		int 	`yaml:"read_timeout"`
-	Retry			int 	`yaml:"retry"`
+	Username     string `yaml:"username"`
+	Password     string `yaml:"password"`
+	Host         string `yaml:"host"`
+	Port         string `yaml:"port"`
+	ConnTimeout  int    `yaml:"conn_timeout"`
+	WriteTimeout int    `yaml:"write_timeout"`
+	ReadTimeout  int    `yaml:"read_timeout"`
+	Retry        int    `yaml:"retry"`
 }
+
 var MysqlConfInfo = map[string]mysqlInfo{}
 
 // redis配置信息
 type redisInfo struct {
-	Username 		string 	`yaml:"username"`
-	Password 		string 	`yaml:"password"`
-	Ip				string 	`yaml:"ip"`
-	Port			string 	`yaml:"port"`
-	ConnTimeout		int 	`yaml:"conn_timeout"`
-	WriteTimeout	int 	`yaml:"write_timeout"`
-	ReadTimeout		int 	`yaml:"read_timeout"`
-	Retry			int 	`yaml:"retry"`
+	Username     string `yaml:"username"`
+	Password     string `yaml:"password"`
+	Host         string `yaml:"host"`
+	Port         string `yaml:"port"`
+	ConnTimeout  int    `yaml:"conn_timeout"`
+	WriteTimeout int    `yaml:"write_timeout"`
+	ReadTimeout  int    `yaml:"read_timeout"`
+	Retry        int    `yaml:"retry"`
 }
+
 var RedisConfInfo = map[string]redisInfo{}
 
 func InitConf() {
