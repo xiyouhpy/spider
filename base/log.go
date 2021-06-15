@@ -16,7 +16,7 @@ const RotationTime = 1
 // 设置日志保留个数（保留3天）
 const RotationCount = 72
 
-func InitLog() {
+func Logger() {
 	writer, _ := rotatelogs.New(
 		LogPath+".%Y%m%d%H",
 		rotatelogs.WithLinkName(LogPath),
