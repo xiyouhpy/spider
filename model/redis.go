@@ -15,8 +15,8 @@ import (
 var redisConn *redis.Client
 var redisOnce sync.Once
 
-// getInstance 获取 redis 对象
-func getInstance(ctx context.Context) *redis.Client {
+// getRedis 获取 redis 对象
+func getRedis() *redis.Client {
 	if redisConn != nil {
 		return redisConn
 	}
@@ -32,8 +32,8 @@ func getInstance(ctx context.Context) *redis.Client {
 		PoolTimeout:  30 * time.Second,
 	}
 
-	redisInfo := util.RedisConfInfo["redis_spider"]
 	// 设置访问 host、ip
+	redisInfo := util.RedisConfInfo["redis_spider"]
 	if redisInfo.Host != "" && redisInfo.Port != "" {
 		redisOpt.Addr = fmt.Sprintf("%s:%s", redisInfo.Host, redisInfo.Port)
 	}
@@ -53,7 +53,12 @@ func getInstance(ctx context.Context) *redis.Client {
 
 // Set redis set 操作
 func Set(ctx context.Context, key string, val interface{}, expire int) error {
-	c := getInstance(ctx)
+	c := getRedis()
+	if _, err := c.Ping(ctx).Result(); err != nil {
+		logrus.Warnf("ping redis err, err:%s", err.Error())
+		return err
+	}
+
 	err := c.SetEX(ctx, key, val, time.Duration(expire)*time.Second).Err()
 	if err != nil {
 		logrus.Warnf("set redis err, err:%s", err.Error())
@@ -65,7 +70,12 @@ func Set(ctx context.Context, key string, val interface{}, expire int) error {
 
 // Get redis get 操作
 func Get(ctx context.Context, key string) (interface{}, error) {
-	c := getInstance(ctx)
+	c := getRedis()
+	if _, err := c.Ping(ctx).Result(); err != nil {
+		logrus.Warnf("ping redis err, err:%s", err.Error())
+		return nil, err
+	}
+
 	val, err := c.Get(ctx, key).Result()
 	if err != nil {
 		logrus.Warnf("get redis err, err:%s", err.Error())
@@ -77,7 +87,12 @@ func Get(ctx context.Context, key string) (interface{}, error) {
 
 // Exists redis exists 操作
 func Exists(ctx context.Context, key string) (int64, error) {
-	c := getInstance(ctx)
+	c := getRedis()
+	if _, err := c.Ping(ctx).Result(); err != nil {
+		logrus.Warnf("ping redis err, err:%s", err.Error())
+		return -1, err
+	}
+
 	val, err := c.Exists(ctx, key).Result()
 	if err != nil {
 		logrus.Warnf("exists redis err, err:%s", err.Error())

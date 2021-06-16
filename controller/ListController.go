@@ -6,21 +6,18 @@ import (
 	"github.com/xiyouhpy/spider/service"
 )
 
-// GetListHandler ...
+// GetList 获取参数列表信息
 func GetList(c *gin.Context) {
-	serviceID := c.Query("message")
+	serviceID := c.Query("service_id")
 
 	req := map[string]interface{}{
 		"service_id": serviceID,
 	}
 	res, err := service.GetList(ctx, req)
-	if err == nil {
+	if err != nil {
 		JsonRet(c, base.ErrServiceError, nil)
 		return
 	}
 
-	ret := map[string]interface{}{
-		"service_id": res,
-	}
-	JsonRet(c, base.ErrSuccess, ret)
+	JsonRet(c, base.ErrSuccess, res)
 }

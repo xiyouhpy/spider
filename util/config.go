@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	// mysql 相关配置文件
+	// MysqlConf 相关配置文件
 	MysqlConf = "./config/mysql.yaml"
-	// redis 相关配置文件
+	// RedisConf 相关配置文件
 	RedisConf = "./config/redis.yaml"
 )
 
@@ -61,19 +61,19 @@ func GetConf() {
 func getMysqlConf(strFileName string, confInfo *map[string]mysqlInfo) error {
 	_, err := os.Stat(strFileName)
 	if os.IsNotExist(err) {
-		logrus.Fatalf("getSpiderConf err, filename:", strFileName, " not exist")
+		logrus.Fatalf("getSpiderConf err, filename:%s not exist", strFileName)
 		return base.ErrGetConfError
 	}
 
 	data, err := ioutil.ReadFile(strFileName)
 	if err != nil {
-		logrus.Fatalf("getSpiderConf ioutil.ReadFile err, filename:", strFileName, " err:", err.Error())
+		logrus.Fatalf("getSpiderConf ioutil.ReadFile err, filename:%s, err:%s", strFileName, err.Error())
 		return base.ErrGetConfError
 	}
 
 	err = yaml.Unmarshal(data, confInfo)
 	if err != nil {
-		logrus.Fatalf("getSpiderConf yaml.Unmarshal err, filename:", strFileName, " err:", err.Error())
+		logrus.Fatalf("getSpiderConf yaml.Unmarshal err, filename:%s, err:%s", strFileName, err.Error())
 		return base.ErrGetConfError
 	}
 
@@ -84,19 +84,19 @@ func getMysqlConf(strFileName string, confInfo *map[string]mysqlInfo) error {
 func getRedisConf(strFileName string, confInfo *map[string]redisInfo) error {
 	_, err := os.Stat(strFileName)
 	if os.IsNotExist(err) {
-		logrus.Fatalf("getSpiderConf err, filename:", strFileName, " not exist")
+		logrus.Fatalf("getSpiderConf err, filename:%s not exist", strFileName)
 		return base.ErrGetConfError
 	}
 
 	data, err := ioutil.ReadFile(strFileName)
 	if err != nil {
-		logrus.Fatalf("getSpiderConf ioutil.ReadFile err, filename:", strFileName, " err:", err.Error())
+		logrus.Fatalf("getSpiderConf ioutil.ReadFile err, filename:%s, err:%s", strFileName, err.Error())
 		return base.ErrGetConfError
 	}
 
 	err = yaml.Unmarshal(data, confInfo)
 	if err != nil {
-		logrus.Fatalf("getSpiderConf yaml.Unmarshal err, filename:", strFileName, " err:", err.Error())
+		logrus.Fatalf("getSpiderConf yaml.Unmarshal err, filename:%s, err:%s", strFileName, err.Error())
 		return base.ErrGetConfError
 	}
 
