@@ -7,15 +7,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// 设置日志保存目录
+// LogPath 设置日志保存目录
 const LogPath = "./log/spider.log"
 
-// 设置日志切割时间间隔，单位：小时（每隔1小时切割）
+// RotationTime 设置日志切割时间间隔，单位：小时（每隔1小时切割）
 const RotationTime = 1
 
-// 设置日志保留个数（保留3天）
+// RotationCount 设置日志保留个数（保留3天）
 const RotationCount = 72
 
+// Logger 日志打印设置
 func Logger() {
 	writer, _ := rotatelogs.New(
 		LogPath+".%Y%m%d%H",

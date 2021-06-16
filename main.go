@@ -1,9 +1,6 @@
 package main
 
 import (
-	"context"
-
-	"github.com/sirupsen/logrus"
 	"github.com/xiyouhpy/spider/base"
 	"github.com/xiyouhpy/spider/router"
 	"github.com/xiyouhpy/spider/util"
@@ -17,10 +14,7 @@ func init() {
 	base.Logger()
 }
 
-var ctx = context.Background()
-
 func main() {
-	logrus.Info("test")
 	router.Server()
 	return
 }
