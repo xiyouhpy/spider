@@ -57,6 +57,9 @@ func Select(ctx context.Context, strSql string) (interface{}, error) {
 	conn := getMysql()
 
 	// 1、sql 预处理
+	if util.DebugSwitch {
+		logrus.Printf("Select sql:%s", strSql)
+	}
 	preSql, err := conn.Prepare(strSql)
 	if err != nil {
 		logrus.Warnf("prepare err, err:%s", err.Error())
