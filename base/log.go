@@ -25,6 +25,7 @@ func Logger() {
 		rotatelogs.WithRotationTime(time.Duration(RotationTime)*time.Hour),
 	)
 	logrus.SetOutput(writer)
+	logrus.SetReportCaller(true)
 	logrus.SetFormatter(&logrus.TextFormatter{
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
