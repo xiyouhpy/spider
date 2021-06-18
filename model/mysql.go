@@ -52,20 +52,20 @@ func getMysql() *sql.DB {
 	return db
 }
 
-// Select 查询单条数据示例
+// Select 查询数据
 func Select(ctx context.Context, strSql string) (interface{}, error) {
-	conn := getMysql()
-
-	// 1、sql 预处理
 	if util.DebugSwitch {
 		logrus.Printf("Select sql:%s", strSql)
 	}
-	preSql, err := conn.Prepare(strSql)
+
+	// 1、sql 预处理
+	conn := getMysql()
+	prepare, err := conn.Prepare(strSql)
 	if err != nil {
 		logrus.Warnf("prepare err, err:%s", err.Error())
 		return nil, err
 	}
-	defer preSql.Close()
+	defer prepare.Close()
 
 	// 2、sql 执行
 	rows, err := conn.QueryContext(ctx, strSql)
@@ -79,7 +79,7 @@ func Select(ctx context.Context, strSql string) (interface{}, error) {
 	spiderList := make([]*util.SpiderList, 0)
 	for rows.Next() {
 		list := new(util.SpiderList)
-		err = rows.Scan(&list.ID, &list.Md5, &list.Title, &list.Abstract, &list.URL, &list.Path, &list.Size, &list.Ctime, &list.OpTime)
+		err = rows.Scan(&list.Id, &list.Md5, &list.Title, &list.Abstract, &list.Url, &list.Path, &list.Size, &list.Ctime, &list.Atime)
 		if err != nil {
 			logrus.Warnf("scan err, err:%s", err.Error())
 			continue
@@ -88,4 +88,100 @@ func Select(ctx context.Context, strSql string) (interface{}, error) {
 	}
 
 	return spiderList, nil
+}
+
+// Insert 插入数据
+func Insert(ctx context.Context, strSql string) (interface{}, error) {
+	if util.DebugSwitch {
+		logrus.Printf("sql:%s", strSql)
+	}
+
+	// 1、sql 预处理
+	conn := getMysql()
+	prepare, err := conn.Prepare(strSql)
+	if err != nil {
+		logrus.Warnf("prepare err, err:%s", err.Error())
+		return nil, err
+	}
+	defer prepare.Close()
+
+	// 2、sql 执行
+	ret, err := conn.ExecContext(ctx, strSql)
+	if err != nil {
+		logrus.Warnf("exec err, err:%s", err.Error())
+		return nil, err
+	}
+
+	// 3、获取插入自增id
+	id, err := ret.LastInsertId() // 新插入数据的id
+	if err != nil {
+		logrus.Warnf("get insert id err, err:%s", err.Error())
+		return nil, err
+	}
+
+	return id, nil
+}
+
+// Update 插入数据
+func Update(ctx context.Context, strSql string) (interface{}, error) {
+	if util.DebugSwitch {
+		logrus.Printf("sql:%s", strSql)
+	}
+
+	// 1、sql 预处理
+	conn := getMysql()
+	prepare, err := conn.Prepare(strSql)
+	if err != nil {
+		logrus.Warnf("prepare err, err:%s", err.Error())
+		return nil, err
+	}
+	defer prepare.Close()
+
+	// 2、sql 执行
+	ret, err := conn.ExecContext(ctx, strSql)
+	if err != nil {
+		logrus.Warnf("exec err, err:%s", err.Error())
+		return nil, err
+	}
+
+	// 3、获取本次操作影响的行数
+	num, err := ret.RowsAffected()
+	if err != nil {
+		logrus.Warnf("get RowsAffected err, err:%s", err.Error())
+		return nil, err
+	}
+
+	return num, nil
+}
+
+// Delete 插入数据
+func Delete(ctx context.Context, strSql string) (interface{}, error) {
+	if util.DebugSwitch {
+		logrus.Printf("sql:%s", strSql)
+	}
+
+	// 1、sql 预处理
+	conn := getMysql()
+	prepare, err := conn.Prepare(strSql)
+	if err != nil {
+		logrus.Warnf("prepare err, err:%s", err.Error())
+		return nil, err
+	}
+	defer prepare.Close()
+
+	// 2、sql 执行
+	ret, err := conn.ExecContext(ctx, strSql)
+	if err != nil {
+		logrus.Warnf("exec err, err:%s", err.Error())
+		return nil, err
+	}
+
+	// 3、获取本次操作影响的行数
+	num, err := ret.RowsAffected()
+	if err != nil {
+		logrus.Warnf("get RowsAffected err, err:%s", err.Error())
+		return nil, err
+	}
+
+	return num, nil
 }

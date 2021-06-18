@@ -20,4 +20,8 @@ func Server() {
 func registerService(r *gin.Engine) {
 	// 获取数据列表
 	r.GET("/spider/getList", controller.GetList)
+	// 添加数据列表
+	r.GET("/spider/addList", controller.AddList)
+	// 删除数据列表
+	r.GET("/spider/delList", controller.DelList)
 }

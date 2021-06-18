@@ -19,9 +19,11 @@ func JsonRet(c *gin.Context, err error, data interface{}) {
 	}
 
 	response := map[string]interface{}{
-		"no":   e.Errno(),
-		"msg":  e.Error(),
-		"data": data,
+		"no":  e.Errno(),
+		"msg": e.Error(),
+	}
+	if data != nil {
+		response["data"] = data
 	}
 	c.JSON(http.StatusOK, response)
 	return

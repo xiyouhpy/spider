@@ -85,6 +85,23 @@ func Get(ctx context.Context, key string) (interface{}, error) {
 	return val, nil
 }
 
+// Del redis del 操作
+func Del(ctx context.Context, key string) error {
+	c := getRedis()
+	if _, err := c.Ping(ctx).Result(); err != nil {
+		logrus.Warnf("ping redis err, err:%s", err.Error())
+		return err
+	}
+
+	_, err := c.Del(ctx, key).Result()
+	if err != nil {
+		logrus.Warnf("del redis err, err:%s", err.Error())
+		return err
+	}
+
+	return nil
+}
+
 // Exists redis exists 操作
 func Exists(ctx context.Context, key string) (int64, error) {
 	c := getRedis()
