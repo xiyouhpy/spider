@@ -11,7 +11,7 @@ import (
 
 var ctx = context.Background()
 
-func JsonRet(c *gin.Context, err error, data interface{}) {
+func JsonRet(c *gin.Context, err error, data ...interface{}) {
 	cause := errors.Cause(err)
 	e, ok := cause.(base.Error)
 	if !ok {
