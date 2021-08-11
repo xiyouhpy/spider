@@ -1,14 +1,15 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
-	"github.com/xiyouhpy/spider/controller"
-	"github.com/xiyouhpy/spider/util"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"github.com/xiyouhpy/spider/controller"
+	"github.com/xiyouhpy/spider/util"
 )
 
 // tmpFileExpireTime 临时文件过期时间设置
@@ -35,6 +36,8 @@ func Server() {
 func registerService(r *gin.Engine) {
 	// 抓取图片接口
 	r.GET("/spider/grabImage", controller.GrabImage)
+	// 抓取网页接口
+	r.GET("/spider/grabHtml", controller.GrabHtml)
 }
 
 // initPath ...
